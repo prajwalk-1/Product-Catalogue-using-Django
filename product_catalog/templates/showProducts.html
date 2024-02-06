@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+    <div class="container">
+
+
+        <div class="row justify-content-center m-2">
+
+            {% if products %}
+
+            {% for product in products %}
+
+                <section class="col-md-4">
+                  <div class="card p-2" style=" height: 100%;">                        
+                    <div class="img" style=" object-fit:cover; overflow: hidden;  border-radius: .3em; background-color:aliceblue; height:300px; display: flex; justify-content: center; align-items: center;">
+                      <img src="{{ product.image.url }}" style=" width: 300px;"  class="card-img-top" alt="...">
+                    </div>
+                    <div class="desc" style=" margin: 1.5em 0 1.5em 0;">
+                      <h2 style="font-size: 1.4rem;">{{ product.name }}</h2>
+                      <h1 style="font-size: 1.6rem; color: rgb(252, 130, 109);">₹{{ product.price }}</h1>
+                    </div>
+
+                    <button class="detail" style=" color: white; padding: .3em 0 .3em 0; border-radius: .4em;">
+                      <a href="{% url 'productDetail' product.pk  %}" style="text-decoration: none; color: aliceblue; font-size: 1.1rem; font-weight: 400;">
+                      Detail
+                    </a>
+                    </button>
+                  </div>
+                </section>
+
+            {% endfor %}
+
+            {% else %}
+                 <p>No Products </p>
+            {% endif %}
+
+
+            <div class="col-md-4">
+              <h2>Category</h2>
+              <br>
+              <hr>
+              
+                  <a class="list-group-item" href="{% url 'showProducts' %}">All</a>
+
+                  {% for category in categories %}
+
+                    <li class="list-group-item">
+                        <a class="btn btn-primary" href="{% url 'showProducts' %}?category={{ category.name }}">{{ category.name }}</a>
+                    </li>
+
+                  {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <div class="row m-5">
+          <div class="col-md-12 m-2">
+  
+            {% if products.has_other_pages %}
+              <ul class="pagination">
+                    {% if products.has_previous %}  
+                        <li class="page-item">
+                          <a href="?page={{ products.previous_page_number }}" class="page-link">&laquo;
+                          </a>
+                        <li>
+                      {% else %}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="?page=1">&laquo;</a>
+                        </li>     
+                     {% endif %}
+  
+                  {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                          <li class="page-item active">
+                            <a class="page-link">{{ i }}</a>
+                          </li>
+                        {% else %}
+                        <li class="page-item">
+                          <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                        </li>  
+                        {% endif %}
+                  {% endfor %}
+
+
+  
+                  {% if products.has_next %}  
+                  <li class="page-item">
+                    <a href="?page={{ products.next_page_number }}" class="page-link">&raquo;
+                    </a>
+                  <li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="?page={{ products.paginator.num_pages }}">&raquo;</a>
+                  </li>     
+                  {% endif %}
+  
+              </ul>
+            {% endif %}
+  
+          </div>
+        </div>
+
+
+       
+     
+
+
+    </div>
+
+{% endblock %}
+
