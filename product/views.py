@@ -4,10 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from datetime import datetime
 from django.contrib.auth.models import User
-
-
-# Create your views here.
-
 from . models import Product, Category, Comment
 from . forms import ProductForm, CommentForm
 
