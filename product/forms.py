@@ -20,8 +20,6 @@ class ProductForm(forms.ModelForm):
             'description': 'Enter a Description: ',
         }
 
-
-
    
 
 class CommentForm(forms.ModelForm):
@@ -31,4 +29,3 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'comment_body': forms.Textarea(attrs={'class': 'form-control'}),
         }
-
