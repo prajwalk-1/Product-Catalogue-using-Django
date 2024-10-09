@@ -10,7 +10,6 @@ from . forms import ProductForm, CommentForm
 
 @login_required(login_url='accounts/login')
 def ShowAllProducts(request):
-    
     category = request.GET.get('category')
 
     if category == None:
@@ -29,14 +28,11 @@ def ShowAllProducts(request):
        
     
     categories = Category.objects.all()
-    
     context = {
         'products': products,
         'categories': categories
     }
-
     return render(request, 'showProducts.html', context)
-
 
 
 @login_required(login_url='showProducts')
@@ -44,14 +40,11 @@ def productDetail(request, pk):
     eachProduct = Product.objects.get(id=pk)
 
     num_comments = Comment.objects.filter(product=eachProduct).count()
-
     context = {
         'eachProduct': eachProduct,
         'num_comments': num_comments,
     }
-
     return render(request, 'productDetail.html', context)
-
 
 
 @login_required(login_url='showProducts')
@@ -71,7 +64,6 @@ def addProduct(request):
         "form":form,
         'categories': categories
     }
-
     return render(request, 'addProduct.html',context)
 
 
@@ -90,7 +82,6 @@ def updateProduct(request,pk):
     context = {
         "form":form
     }
-
     return render(request, 'updateProduct.html', context)
 
 
@@ -136,7 +127,6 @@ def add_comment(request, pk):
     context = {
         'form': form
     }
-
     return render(request, 'add_comment.html', context)
 
 
